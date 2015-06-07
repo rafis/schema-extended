@@ -1,0 +1,19 @@
+{
+    "name": "rafis/schema-extended",
+    "description": "Extended Schema builder for Laravel 5 (currently only MySQL)",
+    "keywords": ["laravel","illuminate","schema","blueprint","mysql"],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/database": "~5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.1",
+        "mockery/mockery": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "SchemaExtended\\": "src/SchemaExtended/"
+        }
+    }
+}
