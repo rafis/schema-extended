@@ -1,4 +1,4 @@
-Add package to package.json
+Add package to `package.json`
 ```json
 "repositories": [
     {
@@ -7,12 +7,14 @@ Add package to package.json
     }
 ],
 "require": {
-	"laravel/framework": "5.0.*",
+    "laravel/framework": "5.0.*",
     "rafis/schema-extended": "~1.0"
 },
 ```
 
-Replace "alias" in the configuration file `config/app.php`
+Do not forget to run `composer install` after modifying `package.json`.
+
+Replace "alias" in the configuration file `config/app.php`:
 ```php
 'aliases' => array(
     ...
@@ -21,7 +23,7 @@ Replace "alias" in the configuration file `config/app.php`
 ),
 ```
 
-Use new features in migrations
+Use new features in migrations:
 ```php
 Schema::create('tests', function ($table) {
     $table->increments('id');
