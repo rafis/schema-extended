@@ -34,4 +34,18 @@ class Blueprint extends IlluminateBlueprint {
         return $this->addColumn('set', $column, compact('allowed'));
     }
 
+	/**
+	 * Determine if the given table exists.
+	 *
+	 * @param  string $table
+	 *
+	 * @return bool
+	 */
+	public function hasForeign( $table, $foreign ) {
+		$sql = $this->grammar->compileHasForeign();
+
+		$table = $this->connection->getTablePrefix() . $table;
+
+		return count( $this->connection->select( $sql, [ $table, $foreign ] ) ) > 0;
+	}
 }

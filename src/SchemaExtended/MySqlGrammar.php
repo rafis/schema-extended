@@ -141,5 +141,14 @@ class MySqlGrammar extends IlluminateMySqlGrammar {
 
 		return "alter table {$table} add {$type} {$command->index}($columns)";
 	}
-    
+
+    /**
+     * Compile the query to determine if the foreign key exists
+     *
+     * @return string
+     */
+    public function compileHasForeign() {
+        return 'select TABLE_NAME,COLUMN_NAME,CONSTRAINT_NAME, REFERENCED_TABLE_NAME,REFERENCED_COLUMN_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE where REFERENCED_TABLE_NAME = ? and CONSTRAINT_NAME = ?';
+    }
+
 }
