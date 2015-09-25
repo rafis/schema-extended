@@ -126,7 +126,11 @@ class MySqlGrammar extends IlluminateMySqlGrammar {
                 }
                 
                 $column = $this->wrap($commandColumn);
-                if ( 'string' == $blueprintColumn->type && $blueprintColumn->length > 255 )
+                if ( isset($command->length) )
+                {
+                    $column .= "({$command->length})";
+                }
+                elseif ( 'string' == $blueprintColumn->type && $blueprintColumn->length > 255 )
                 {
                     $column .= '(255)';
                 }

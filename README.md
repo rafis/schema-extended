@@ -36,7 +36,7 @@ Add package to `package.json`
 },
 ```
 
-Do not forget to run `composer install` after modifying `package.json`.
+Do not forget to run `composer install` or `composer update rafis/schema-extended` after modifying `package.json`.
 
 Replace "alias" in the configuration file `config/app.php`:
 ```php
