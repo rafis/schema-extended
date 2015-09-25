@@ -83,16 +83,16 @@ class MySqlGrammar extends IlluminateMySqlGrammar {
         return $sql;
     }
 
-	/**
-	 * Create the column definition for a binary type.
-	 *
-	 * @param  \Illuminate\Support\Fluent  $column
-	 * @return string
-	 */
-	protected function typeBinary(Fluent $column)
-	{
-		return "binary({$column->length})";
-	}
+    /**
+     * Create the column definition for a binary type.
+     *
+     * @param  \Illuminate\Support\Fluent  $column
+     * @return string
+     */
+    protected function typeBinary(Fluent $column)
+    {
+        return "binary({$column->length})";
+    }
 
     /**
      * Create the column definition for an 'set' type.
@@ -105,16 +105,16 @@ class MySqlGrammar extends IlluminateMySqlGrammar {
         return "set('" . implode("', '", $column->allowed) . "')";
     }
 
-	/**
-	 * Compile an index creation command.
-	 *
-	 * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
-	 * @param  \Illuminate\Support\Fluent  $command
-	 * @param  string  $type
-	 * @return string
-	 */
-	protected function compileKey(IlluminateBlueprint $blueprint, Fluent $command, $type)
-	{
+    /**
+     * Compile an index creation command.
+     *
+     * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
+     * @param  \Illuminate\Support\Fluent  $command
+     * @param  string  $type
+     * @return string
+     */
+    protected function compileKey(IlluminateBlueprint $blueprint, Fluent $command, $type)
+    {
         $columns = [];
         foreach($command->columns as $commandColumn)
         {
@@ -135,20 +135,21 @@ class MySqlGrammar extends IlluminateMySqlGrammar {
             }
         }
         
-		$columns = implode(', ', $columns);
+        $columns = implode(', ', $columns);
 
-		$table = $this->wrapTable($blueprint);
+        $table = $this->wrapTable($blueprint);
 
-		return "alter table {$table} add {$type} {$command->index}($columns)";
-	}
+        return "alter table {$table} add {$type} {$command->index}($columns)";
+    }
 
     /**
      * Compile the query to determine if the foreign key exists
      *
      * @return string
      */
-    public function compileHasForeign() {
-        return 'select TABLE_NAME,COLUMN_NAME,CONSTRAINT_NAME, REFERENCED_TABLE_NAME,REFERENCED_COLUMN_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE where REFERENCED_TABLE_NAME = ? and CONSTRAINT_NAME = ?';
+    public function compileHasForeign()
+    {
+        return 'select TABLE_NAME, COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE where REFERENCED_TABLE_NAME = ? and CONSTRAINT_NAME = ?';
     }
 
 }

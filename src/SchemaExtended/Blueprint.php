@@ -10,17 +10,17 @@ use Illuminate\Database\Schema\Blueprint as IlluminateBlueprint;
  */
 class Blueprint extends IlluminateBlueprint {
 
-	/**
-	 * Create a new binary column on the table.
-	 *
-	 * @param  string  $column
-	 * @param  int  $length
-	 * @return \Illuminate\Support\Fluent
-	 */
-	public function binary($column, $length = 255)
-	{
-		return $this->addColumn('binary', $column, compact('length'));
-	}
+    /**
+     * Create a new binary column on the table.
+     *
+     * @param  string  $column
+     * @param  int  $length
+     * @return \Illuminate\Support\Fluent
+     */
+    public function binary($column, $length = 255)
+    {
+        return $this->addColumn('binary', $column, compact('length'));
+    }
 
     /**
      * Create a new 'set' column on the table.
@@ -34,18 +34,19 @@ class Blueprint extends IlluminateBlueprint {
         return $this->addColumn('set', $column, compact('allowed'));
     }
 
-	/**
-	 * Determine if the given table exists.
-	 *
-	 * @param  string $table
-	 *
-	 * @return bool
-	 */
-	public function hasForeign( $table, $foreign ) {
-		$sql = $this->grammar->compileHasForeign();
+    /**
+     * Determine if the given table exists.
+     *
+     * @param  string $table
+     *
+     * @return bool
+     */
+    public function hasForeign($table, $foreign)
+    {
+        $sql = $this->grammar->compileHasForeign();
 
-		$table = $this->connection->getTablePrefix() . $table;
+        $table = $this->connection->getTablePrefix() . $table;
 
-		return count( $this->connection->select( $sql, [ $table, $foreign ] ) ) > 0;
-	}
+        return count($this->connection->select($sql, [$table, $foreign])) > 0;
+    }
 }
