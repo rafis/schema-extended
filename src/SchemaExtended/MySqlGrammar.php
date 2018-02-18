@@ -6,8 +6,7 @@ use Illuminate\Database\Schema\Grammars\MySqlGrammar as IlluminateMySqlGrammar;
 use Illuminate\Database\Schema\Blueprint as IlluminateBlueprint;
 
 /**
- * Extended version of MySqlGrammar with
- * support of 'set' data type
+ * Extended version of MySqlGrammar with support for additional data types.
  */
 class MySqlGrammar extends IlluminateMySqlGrammar {
 
@@ -92,6 +91,62 @@ class MySqlGrammar extends IlluminateMySqlGrammar {
     protected function typeBinary(Fluent $column)
     {
         return "binary({$column->length})";
+    }
+
+    /**
+     * Create the column definition for a tinytext type.
+     *
+     * @param  \Illuminate\Support\Fluent  $column
+     * @return string
+     */
+    protected function typeTinytext(Fluent $column)
+    {
+        return "tinytext";
+    }
+
+    /**
+     * Create the column definition for a tinyblob type.
+     *
+     * @param  \Illuminate\Support\Fluent  $column
+     * @return string
+     */
+    protected function typeTinyblob(Fluent $column)
+    {
+        return "tinyblob";
+    }
+
+    /**
+     * Create the column definition for a blob type. Corresponds to the core
+     * binary type.
+     *
+     * @param  \Illuminate\Support\Fluent  $column
+     * @return string
+     */
+    protected function typeBlob(Fluent $column)
+    {
+        return "blob";
+    }
+
+    /**
+     * Create the column definition for a mediumblob type.
+     *
+     * @param  \Illuminate\Support\Fluent  $column
+     * @return string
+     */
+    protected function typeMediumblob(Fluent $column)
+    {
+        return "mediumblob";
+    }
+
+    /**
+     * Create the column definition for a longblob type.
+     *
+     * @param  \Illuminate\Support\Fluent  $column
+     * @return string
+     */
+    protected function typeLongblob(Fluent $column)
+    {
+        return "longblob";
     }
 
     /**

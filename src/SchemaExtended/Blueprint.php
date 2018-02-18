@@ -5,8 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint as IlluminateBlueprint;
 
 /**
- * Extended version of Blueprint with
- * support of 'set' data type
+ * Extended version of Blueprint with support for additional data types.
  */
 class Blueprint extends IlluminateBlueprint {
 
@@ -20,6 +19,62 @@ class Blueprint extends IlluminateBlueprint {
     public function binary($column, $length = 255)
     {
         return $this->addColumn('binary', $column, compact('length'));
+    }
+
+    /**
+     * Create a new tinytext column on the table.
+     *
+     * @param  string  $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function tinyText($column)
+    {
+        return $this->addColumn('tinytext', $column);
+    }
+
+    /**
+     * Create a new tinyblob column on the table.
+     *
+     * @param  string  $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function tinyBlob($column)
+    {
+        return $this->addColumn('tinyblob', $column);
+    }
+
+    /**
+     * Create a new blob column on the table. Corresponds to the core binary()
+     * method.
+     *
+     * @param  string  $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function blob($column)
+    {
+        return $this->addColumn('blob', $column);
+    }
+
+    /**
+     * Create a new mediumblob column on the table.
+     *
+     * @param  string  $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function mediumBlob($column)
+    {
+        return $this->addColumn('mediumblob', $column);
+    }
+
+    /**
+     * Create a new longblob column on the table.
+     *
+     * @param  string  $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function longBlob($column)
+    {
+        return $this->addColumn('longblob', $column);
     }
 
     /**

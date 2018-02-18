@@ -4,12 +4,21 @@ What it gives?
 It adds new features to Schema which you can use in your migrations:
 ```php
 Schema::create('tests', function ($table) {
-    $table->increments('id');
-    $table->string('description', 1000)->collate('utf8_general_ci');
     $table->binary('md5', 16); // will use BINARY(16) instead of BLOB
-    $table->binary('sha1', 20); // will use BINARY(20) instead of BLOB
-    $table->boolean('enabled')->comment('columns comment');
-    $table->comment = 'table comment';
+    $table->binary('different'); // default BINARY(255), still not BLOB
+
+    $table->set('flags', ['a', 'b', 'c', 'd']); // SET('a', 'b', 'c', 'd')
+
+    $table->tinyText('sometext'); // TINYTEXT -- other sizes already supported
+
+    $table->tinyBlob('someblob'); // TINYBLOB
+    $table->blob('biggerblob'); // BLOB -- like Illuminate's binary() method
+    $table->mediumBlob('evenbiggerblob'); // MEDIUMBLOB
+    $table->longBlob('biggestblob'); // LONGBLOB
+
+    $table->index('sometext', 'foo', 10); // Third param is index length not
+                                          // algorithm like in Illuminate
+    $table->unique('someblob', null, 10); // null for automatic naming
 });
 
 ```
@@ -17,12 +26,12 @@ Schema::create('tests', function ($table) {
 What versions of Laravel are supported
 --------------------------------------
 
-It have been tested only with Laravel 5.0. But you can try it with Laravel 5.1 too.
+It has been tested to work with Laravel 5.0 and 5.5.
 
 How to install
 --------------
 
-Add package to `package.json`
+Add package to `composer.json`
 ```json
 "repositories": [
     {
@@ -36,7 +45,7 @@ Add package to `package.json`
 },
 ```
 
-Do not forget to run `composer install` or `composer update rafis/schema-extended` after modifying `package.json`.
+Do not forget to run `composer install` or `composer update rafis/schema-extended` after modifying `composer.json`.
 
 Replace "alias" in the configuration file `config/app.php`:
 ```php
