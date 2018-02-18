@@ -39,12 +39,12 @@ class Schema extends \Illuminate\Support\Facades\Facade
             $MySqlGrammar = $connection->withTablePrefix(new MySqlGrammar);
             $connection->setSchemaGrammar($MySqlGrammar);
         }
-        
+
         $schema = $connection->getSchemaBuilder();
         $schema->blueprintResolver(function($table, $callback) {
             return new Blueprint($table, $callback);
         });
-        
+
         return $schema;
     }
 

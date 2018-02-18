@@ -7,8 +7,8 @@ use Illuminate\Database\Schema\Blueprint as IlluminateBlueprint;
 /**
  * Extended version of Blueprint with support for additional data types.
  */
-class Blueprint extends IlluminateBlueprint {
-
+class Blueprint extends IlluminateBlueprint
+{
     /**
      * Create a new binary column on the table.
      *
@@ -147,12 +147,10 @@ class Blueprint extends IlluminateBlueprint {
         // If no name was specified for this index, we will create one using a basic
         // convention of the table name, followed by the columns, followed by an
         // index type, such as primary or index, which makes the index unique.
-        if (is_null($index))
-        {
+        if (is_null($index)) {
             $index = $this->createIndexName($type, $columns);
         }
 
         return $this->addCommand($type, compact('index', 'columns', 'length'));
     }
-
 }

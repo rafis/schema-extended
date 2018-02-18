@@ -8,23 +8,31 @@ use Illuminate\Database\Schema\Blueprint as IlluminateBlueprint;
 /**
  * Extended version of MySqlGrammar with support for additional data types.
  */
-class MySqlGrammar extends IlluminateMySqlGrammar {
-
+class MySqlGrammar extends IlluminateMySqlGrammar
+{
     /**
-     * 
      * @return void
      */
     public function __construct()
     {
-        if ( ! in_array('Collate', $this->modifiers) )
+        if (!in_array('Collate', $this->modifiers))
         {
-            array_splice($this->modifiers, array_search('Unsigned', $this->modifiers) + 1, 0, 'Collate');
+            array_splice(
+                $this->modifiers,
+                array_search('Unsigned', $this->modifiers) + 1,
+                0,
+                'Collate'
+            );
         }
 
         // new versions of Laravel already have comment modifier
-        if ( ! in_array('Comment', $this->modifiers) )
-        {
-            array_splice($this->modifiers, array_search('After', $this->modifiers) - 1, 0, 'Comment');
+        if (!in_array('Comment', $this->modifiers)) {
+            array_splice(
+                $this->modifiers,
+                array_search('After', $this->modifiers) - 1,
+                0,
+                'Comment'
+            );
         }
     }
 
@@ -35,10 +43,11 @@ class MySqlGrammar extends IlluminateMySqlGrammar {
      * @param \Illuminate\Support\Fluent             $column
      * @return string|null
      */
-    protected function modifyCollate(IlluminateBlueprint $blueprint, Fluent $column)
-    {
-        if ( ! is_null($column->collate) )
-        {
+    protected function modifyCollate(
+        IlluminateBlueprint $blueprint,
+        Fluent $column
+    ) {
+        if (!is_null($column->collate)) {
             $characterSet = strtok($column->collate, '_');
             return " character set $characterSet collate {$column->collate}";
         }
@@ -51,10 +60,11 @@ class MySqlGrammar extends IlluminateMySqlGrammar {
      * @param \Illuminate\Support\Fluent             $column
      * @return string|null
      */
-    protected function modifyComment(IlluminateBlueprint $blueprint, Fluent $column)
-    {
-        if ( ! is_null($column->comment) )
-        {
+    protected function modifyComment(
+        IlluminateBlueprint $blueprint,
+        Fluent $column
+    ) {
+        if (!is_null($column->comment)) {
             $comment = str_replace("'", "\'", $column->comment);
             return " comment '$comment'";
         }
@@ -68,13 +78,15 @@ class MySqlGrammar extends IlluminateMySqlGrammar {
      * @param  \Illuminate\Database\Connection  $connection
      * @return string
      */
-    public function compileCreate(IlluminateBlueprint $blueprint, Fluent $command, Connection $connection)
-    {
+    public function compileCreate(
+        IlluminateBlueprint $blueprint,
+        Fluent $command,
+        Connection $connection
+    ) {
         $sql = parent::compileCreate($blueprint, $command, $connection);
 
         // Table annotation support
-        if ( isset($blueprint->comment) )
-        {
+        if (isset($blueprint->comment)) {
             $comment = str_replace("'", "\'", $blueprint->comment);
             $sql .= " comment = '$comment'";
         }
@@ -168,32 +180,29 @@ class MySqlGrammar extends IlluminateMySqlGrammar {
      * @param  string  $type
      * @return string
      */
-    protected function compileKey(IlluminateBlueprint $blueprint, Fluent $command, $type)
-    {
+    protected function compileKey(
+        IlluminateBlueprint $blueprint,
+        Fluent $command,
+        $type
+    ) {
         $columns = [];
-        foreach($command->columns as $commandColumn)
-        {
-            foreach($blueprint->getColumns() as $blueprintColumn)
-            {
-                if ( $blueprintColumn->name != $commandColumn )
-                {
+        foreach($command->columns as $commandColumn) {
+            foreach($blueprint->getColumns() as $blueprintColumn) {
+                if ($blueprintColumn->name != $commandColumn) {
                     continue;
                 }
-                
+
                 $column = $this->wrap($commandColumn);
-                if ( isset($command->length) )
-                {
+                if (isset($command->length)) {
                     $column .= "({$command->length})";
-                }
-                elseif ( 'string' == $blueprintColumn->type && $blueprintColumn->length > 255 )
-                {
+                } elseif ('string' == $blueprintColumn->type && $blueprintColumn->length > 255) {
                     $column .= '(255)';
                 }
-                
+
                 $columns[] = $column;
             }
         }
-        
+
         $columns = implode(', ', $columns);
 
         $table = $this->wrapTable($blueprint);
